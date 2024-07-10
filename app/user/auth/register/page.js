@@ -4,7 +4,7 @@ import LandingNavbar from "@/components/LandingNavbar";
 import React from "react"
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
 const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ const [formData, setFormData] = useState({
   password:'',
   confirmpassword: ''
 })
+const router = useRouter();
 
 
 const handleInputChange = (e) => {
@@ -22,11 +23,11 @@ const handleInputChange = (e) => {
     [name] : value,
   })
 }
-
 const handleSubmit = async (e)=>{
   e.preventDefault();
   if (formData.password !== formData.confirmpassword) {
    toast.error("Passwords do not match")
+   
     return;
   }
 try {
@@ -37,13 +38,14 @@ try {
     },
     body: JSON.stringify(formData),
   });
+
   const result = await response.json()
   if(result.status === 200){
     toast.success("Registration Completed Successfully.....")
   }else{
     toast.error("Something went wrong");
   }
-  Router.push('/login');
+  router.push('user/auth/login');
 } catch (error) {
   console.error("the error occured is : ", error);
 }
@@ -52,7 +54,7 @@ try {
 
 
     return (
-        <div className="flex flex-col justify-center items-center m-5">
+        <div className="flex flex-col justify-center items-center mt-5">
             <LandingNavbar />
             <div className="m-40 w-1/2 "> {/* Adjust the top margin value as needed */}
                 <div className="mockup-window bg-base-300 border">
@@ -63,7 +65,7 @@ try {
         <div className="max-w-md w-full space-y-8">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-              Create your account
+              Initialize your account
             </h2>
           </div>
           <form className="mt-8 space-y-6">

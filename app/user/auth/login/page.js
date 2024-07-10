@@ -4,9 +4,11 @@ import React from "react"
 import LandingNavbar from "@/components/LandingNavbar"
 import { useState } from "react"
 import Footer from "@/components/Footer"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 export default function Login(){
-
+  const router = useRouter();
     const [formData, setFormData] = useState({
    
         email: '',
@@ -36,13 +38,15 @@ export default function Login(){
             const result = await response.json();
 
             if(result.status === 200){
-                toast.success("Logged in successfully, start solving")
+              toast.success("Logged in successfully, start solving")
+              router.replace('/user/homepage');
             }else{ 
                 toast.error("Something went wrong");
+
             }
 
         }catch(error){
-            console.error("The error occured is : " , error);
+            console.log("The error occured is : " , error);
         }
       }
 
@@ -54,7 +58,7 @@ export default function Login(){
 
 
     return (
-        <div className="flex flex-col justify-center items-center m-5">
+        <div className="flex flex-col justify-center items-center mt-5">
             <LandingNavbar />
             <div className="m-40 w-1/2 "> {/* Adjust the top margin value as needed */}
                 <div className="mockup-window bg-base-300 border">
@@ -65,7 +69,7 @@ export default function Login(){
         <div className="max-w-md w-full space-y-8">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-              Log into your account
+             Access your account
             </h2>
           </div>
           <form className="mt-8 space-y-6">
