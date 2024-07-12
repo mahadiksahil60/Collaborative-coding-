@@ -45,7 +45,7 @@ try {
   }else{
     toast.error("Something went wrong");
   }
-  router.push('user/auth/login');
+  router.push('/login');
 } catch (error) {
   console.error("the error occured is : ", error);
 }

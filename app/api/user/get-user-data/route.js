@@ -4,6 +4,8 @@ import { getDoc, doc, addDoc, where } from "firebase/firestore";
 import { db } from "@/configuration/firebaseconfig";
 import {cookies} from 'next/headers'
 import { verify } from "jsonwebtoken";
+
+
 export async function GET(){
 try {
     //logic to fetch user data from the stored cookies

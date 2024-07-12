@@ -8,17 +8,20 @@ import { sign, verify } from "jsonwebtoken";
 export async function POST(req) {
     try {
         const { email, password } = await req.json();
+        //firebase in auth authentication 
         const userCredentials = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredentials.user;
 
         console.log("the user data is :", user);
-
-
+        
+         
         //logic to set the cookies in the user browser.         
         const userCookieData = {
             uid: user.uid,
             email: user.email
+
         }
+        //encryting cookie with jwt secret key
         const token = sign(userCookieData,process.env.JWT_KEY);
         const isSecure = process.env.NODE_ENV === 'production';
         // Set the token as an HttpOnly cookie.

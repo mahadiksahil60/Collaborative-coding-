@@ -1,7 +1,8 @@
 "use client"
 import { UserContextProvider } from "@/context/AuthContext";
 import React, {useEffect, useState} from "react";
-
+import MainNavbar from "@/components/MainNavbar";
+import Footer from "@/components/Footer";
 
 
 
@@ -14,7 +15,7 @@ export default function Servicelayout({children}){
     const getuserdata = await fetch(`/api/user/get-user-data`, {
         method:"GET", 
         headers : {
-            "Content-Type"  : "appliation/json",
+            "Content-Type"  : "application/json",
         }
     })
 
@@ -31,10 +32,16 @@ export default function Servicelayout({children}){
     
 
     return (
-        <UserContextProvider.Provider value={userData}>
-  
-            {children}
-  
-        </UserContextProvider.Provider>
+
+     <UserContextProvider.Provider value={userData}>
+  <div>
+    <MainNavbar />
+    <main className="mt-48">
+      {children}
+    </main>
+    
+  </div>
+</UserContextProvider.Provider>
+
     );
 }
