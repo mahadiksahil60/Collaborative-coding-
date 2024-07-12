@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { UserContextProvider } from '@/context/AuthContext';
 import { useContext } from 'react';
+import toast from 'react-hot-toast';
 export default function Friendrequest() {
     const [requests, setRequests] = useState([]);
     const user = useContext(UserContextProvider);
@@ -44,7 +45,28 @@ export default function Friendrequest() {
     }, [])
 
 
+    const handleAccept = async(request) =>{
+       try {
+        const UserId  = user.data.uid;
+        const acceptRequest = await fetch(`/api/user/acceptRequest`,{
+            method :"POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({request, UserId }),
+        })
+        const result = await acceptRequest.json();
+        if(result.status == 200){
+            toast.success("Request Accepted");
+            console.log("Request Accepted");
+        }else{
+            toast.error("error accepting request try again later");
+        }
+       } catch (error) {
+        console.log("the error occured while accepting requests", error);
+       }
 
+    }
 
 
     if (loading) {
@@ -64,7 +86,7 @@ export default function Friendrequest() {
                             <p className="font-semibold text-black">{request} sent a friend request.</p>
                             <div className="space-x-2">
                                 <button
-                                    onClick={() => handleAccept(request.id)}
+                                    onClick={() => handleAccept(request)}
                                     className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg focus:outline-none"
                                 >
                                     Accept
