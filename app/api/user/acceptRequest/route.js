@@ -9,8 +9,8 @@ try {
         const UserDocRef = doc(db, "Users", UserId);
         const UserDoc = await getDoc(UserDocRef);
         const userData = UserDoc.data();
-
-
+        
+         //referening the receivers document 
         const usersCollection = collection(db, "Users");
         const q = query(usersCollection, where("username", "==", request));
         const querySnapshot = await getDocs(q);
@@ -18,13 +18,13 @@ try {
         if (querySnapshot.empty) {
             throw new Error(`User with username '${request}' not found.`);
         }
-
-        
+       //referencing the senders document 
         const targetUserDoc = querySnapshot.docs[0];
         const targetUserDocRef = doc(db, "Users", targetUserDoc.id);
         await updateDoc(UserDocRef, {
             friends: arrayUnion(request),
             incomingRequests: arrayRemove(request)
+
         });
         await updateDoc(targetUserDocRef, {
             friends : arrayUnion(userData.username)

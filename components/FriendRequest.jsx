@@ -17,7 +17,7 @@ export default function Friendrequest() {
                 setLoading(false);
             }
         }
-
+        //calling the function
         fetchContext();
     }, [user]);
 
