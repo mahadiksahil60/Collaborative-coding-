@@ -1,6 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.cursor-decoration {
+  border-left: 2px solid rgba(255, 0, 0, 0.5); /* Red color for cursor */
+  background-color: rgba(255, 0, 0, 0.1); /* Slight background color */
+}
+
+.glyph-margin {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
 
 :root {
   --foreground-rgb: 0, 0, 0;

@@ -8,14 +8,14 @@ export async function POST(req) {
     try {
         const { senderusername, ReceiveruserId } = await req.json();
         console.log("the senderusername is : ",senderusername);
-        const ReceiverRef = doc(db, "Users", ReceiveruserId);
+        const ReceiverRef = doc(db, "Users", ReceiveruserId); 
        
-        await updateDoc(ReceiverRef, {
+            await updateDoc(ReceiverRef, {
             incomingRequests: arrayUnion(senderusername)
         });
         console.log("successfully added user");
         
-        return NextResponse.json({ status: 200, message: "Friend request sent successfully." })
+        return NextResponse.json({ status: 200, message: "Friend request sent..." })
     } catch (error) {
         
         console.log("error adding users", error);

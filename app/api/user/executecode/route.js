@@ -3,6 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import { NextResponse } from "next/server";
 import streams from 'memory-streams';
+
+
 const docker = new Docker();
 const TEMP_DIR = path.join(process.cwd(), 'temp');
 
@@ -40,7 +42,7 @@ export async function POST(req) {
 
     await fs.promises.writeFile(codeFilePath, code);
     await fs.promises.writeFile(inputFilePath, input || '');
-
+    //declaring writable streams to get output outside the docker
     const stdout = new streams.WritableStream();
     const stderr = new streams.WritableStream();
 
@@ -77,7 +79,7 @@ await new Promise(async(resolve, reject)=> {
     return NextResponse.json({ status: 200, output });
 
   } catch (error) {
-    console.error('Error in code execution:', error);
+    
     return NextResponse.json({ status: 500, message: 'Internal server error' });
   }
 }
