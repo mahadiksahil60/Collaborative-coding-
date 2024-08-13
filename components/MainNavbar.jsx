@@ -16,7 +16,7 @@ export default function MainNavbar() {
             if (user && user.data) {
                 const userId = user.data.uid;
                 console.log('User ID:', user);
-                await setUserData(user);
+                 setUserData(user);
                 setLoading(false);
             }
         }
@@ -58,14 +58,14 @@ export default function MainNavbar() {
     }
     return (
         <>
-            <div className="navbar bg-black p-5 fixed top-0 w-full z-10">
+            <div className="navbar bg-black p-5  top-0 w-full ">
                 <div className="flex-1">
                     <Link href='/user/homepage' className="btn  text-xl font-serif">Welcome {user.data.username} </Link>
                 </div>
                 <div className="flex-none">
                     <ul className="menu menu-horizontal px-1 text-lg font-bold">
 
-                        <Link href='/user/Friends' className="p-3 rounded-full hover:bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Connect</Link>
+                        {/* <Link href='/user/Friends' className="p-3 rounded-full hover:bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Connect</Link> */}
                         <button onClick={handleLogout} className="p-3 rounded-full hover:bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Logout</button>
 
                     </ul>

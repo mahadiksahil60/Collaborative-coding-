@@ -35,8 +35,8 @@ export default function Servicelayout({children}){
 
      <UserContextProvider.Provider value={userData}>
   <div>
-    <MainNavbar />
-    <main className="mt-36">
+    {/* <MainNavbar /> */}
+    <main className="">
       {children}
     </main>
     

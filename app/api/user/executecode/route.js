@@ -58,7 +58,7 @@ await new Promise(async(resolve, reject)=> {
           console.error('Error executing Docker container:', err);
             reject(new Error("Internal server error"));
         }
-        
+        console.log("the inside output is : ",stdout.toString());
         container.remove(() => {
           console.log('Container removed');
             resolve();
@@ -75,7 +75,7 @@ await new Promise(async(resolve, reject)=> {
       console.error('Execution error:', error);
       return NextResponse.json({ status: 401, error });
      }
-
+     console.log(output)
     return NextResponse.json({ status: 200, output });
 
   } catch (error) {

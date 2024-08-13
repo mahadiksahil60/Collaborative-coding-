@@ -1,4 +1,4 @@
-def printing_func(para):
-    print(para)
+def hello():
+    print("hello from function")
 
-printing_func("This is the para")
+hello()
