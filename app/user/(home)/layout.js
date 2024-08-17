@@ -3,7 +3,7 @@ import { UserContextProvider } from "@/context/AuthContext";
 import React, {useEffect, useState} from "react";
 import MainNavbar from "@/components/MainNavbar";
 import Footer from "@/components/Footer";
-
+import toast, { Toaster } from "react-hot-toast";
 
 
 export default function Servicelayout({children}){
@@ -37,6 +37,7 @@ export default function Servicelayout({children}){
   <div>
     {/* <MainNavbar /> */}
     <main className="">
+        <Toaster/>
       {children}
     </main>
     

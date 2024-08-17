@@ -34,7 +34,6 @@ export default function Homepage() {
 //error states
 const [roomerror, setRoomError] = useState('');
 
-
   useEffect(() => {
     const socket = io('http://localhost:3001');
     setSocket(socket)
@@ -97,6 +96,7 @@ const [roomerror, setRoomError] = useState('');
     socket.emit('joinRoom', roomName);
     setModalLoading(false);
     setIsModalOpen(false);
+    toast.success("Room joined successfully")
   }
   
   const createRoom = () => {
@@ -104,6 +104,7 @@ const [roomerror, setRoomError] = useState('');
     socket.emit('createRoom', roomName);
     setModalLoading(false);
     setIsModalOpen(false);
+    toast.success("Room created  successfully")
     
   }
 
