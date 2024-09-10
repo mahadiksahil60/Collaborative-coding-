@@ -1,85 +1,88 @@
-import Docker from 'dockerode';
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 import { NextResponse } from "next/server";
-import streams from 'memory-streams';
-
-
-const docker = new Docker();
-const TEMP_DIR = path.join(process.cwd(), 'temp');
+import { exec } from "child_process";
+//NOTE: Remove dockerode and execute code directly into the backend.
+const TEMP_DIR = path.join(process.cwd(), "temp");
 
 if (!fs.existsSync(TEMP_DIR)) {
   fs.mkdirSync(TEMP_DIR);
 }
 
-const languageConfigs = {
-  python : {
-    dockerImage: 'my-python-env',
-    command : 'python3 script.py < input.txt',
-    extenstion: 'py'
-  },
-  nodejs : {
-    dockerImage: 'my-nodejs-app',
-    command : 'node script.js < input.txt',
-    extenstion: 'js'
-  }
-}
+const execPromise = (command) =>
+  new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        reject({ error: error.message });
+      } else if (stderr) {
+        resolve({ output: stderr, status: 200 });
+      } else {
+        resolve({ output: stdout, status: 200 });
+      }
+    });
+  });
+
+//execPromise for compiled languages like c++ and java
 
 export async function POST(req) {
   try {
     const { code, input, selectedLanguage } = await req.json();
+    console.log(input);
+    const languageConfig = {
+      python: {
+        extension: "py",
+      },
+      nodejs: {
+        extension: "js",
+      },
+    };
 
-    if (!languageConfigs[selectedLanguage]) {
-      return NextResponse.json({ status: 400, message: 'Unsupported language' });
-    }
+    const { extension } = languageConfig[selectedLanguage];
+    console.log("the extension is ", extension);
 
-    const { dockerImage, command, extenstion } = languageConfigs[selectedLanguage];
-
-    const codeFileName = `script.${extenstion}`;
-    const inputFileName = 'input.txt';
+    //setting up filenames for storing code for execution
+    const codeFileName = `script.${extension}`;
+    const inputFileName = "input.txt";
+    //Generating the file paths
     const codeFilePath = path.join(TEMP_DIR, codeFileName);
     const inputFilePath = path.join(TEMP_DIR, inputFileName);
 
+    //writing the code to the file
     await fs.promises.writeFile(codeFilePath, code);
-    await fs.promises.writeFile(inputFilePath, input || '');
-    //declaring writable streams to get output outside the docker
-    const stdout = new streams.WritableStream();
-    const stderr = new streams.WritableStream();
+    await fs.promises.writeFile(inputFilePath, input || "");
 
-await new Promise(async(resolve, reject)=> {
-      docker.run(
-      dockerImage,
-      ['sh', '-c', command],
-
-      [stdout, stderr],
-      { Tty: false, HostConfig: { Binds: [`${TEMP_DIR}:/app`] } },
-      ( err, data, container) => {
-        if (err) {
-          console.error('Error executing Docker container:', err);
-            reject(new Error("Internal server error"));
-        }
-        console.log("the inside output is : ",stdout.toString());
-        container.remove(() => {
-          console.log('Container removed');
-            resolve();
+    if (selectedLanguage === "python") {
+      try {
+        const result = await execPromise(
+          `python "${codeFilePath}" "${input || ""}"`
+        );
+        console.log("the result si", result);
+        return NextResponse.json(result);
+      } catch (error) {
+        console.log("the error is", error);
+        return NextResponse.json({
+          status: 200,
+          output: error.stderr || error.error || "Compilation failed",
         });
       }
-       
-    );
-    })
-
-      const output = stdout.toString();
-      const error = stderr.toString();
-
-     if (error) {
-      console.error('Execution error:', error);
-      return NextResponse.json({ status: 401, error });
-     }
-     console.log(output)
-    return NextResponse.json({ status: 200, output });
-
+    } else if (selectedLanguage === "nodejs") {
+      try {
+        const result = await execPromise(
+          `node "${codeFilePath}" "${input || ""}"`
+        );
+        console.log("the result si", result);
+        return NextResponse.json(result);
+      } catch (error) {
+        console.log("the error is", error);
+        return NextResponse.json({
+          status: 200,
+          output: error.stderr || error.error || "Compilation failed",
+        });
+      }
+    }
+    //TODO: add support for c++ and javac
   } catch (error) {
-    
-    return NextResponse.json({ status: 500, message: 'Internal server error' });
+    console.log("the error from the server is", error);
+    return NextResponse.json({ status: 500, output: "Internal server error" });
   }
 }

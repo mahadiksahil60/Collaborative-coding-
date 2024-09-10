@@ -41,7 +41,7 @@ export default function Login(){
               toast.success("Logged in successfully, start solving")
               router.replace('/user/homepage');
             }else{ 
-                toast.error("Something went wrong");
+                toast.error("Invalid Credentials");
 
             }
 

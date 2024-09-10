@@ -1,1 +1,5 @@
-console.log("hello world twice")
+function bark(command){
+    console.log(command)
+}
+
+bark('woof')

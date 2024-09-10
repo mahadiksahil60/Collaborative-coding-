@@ -5,7 +5,7 @@ import MainNavbar from "@/components/MainNavbar";
 import Footer from "@/components/Footer";
 import toast, { Toaster } from "react-hot-toast";
 
-
+//This function provides the context with user data
 export default function Servicelayout({children}){
 
     const [userData, setUserData] = useState(null);
@@ -22,7 +22,7 @@ export default function Servicelayout({children}){
     const result = await getuserdata.json();
     setUserData(result);
     if(result.status === 200){
-        console.log("the user data is fetched successfully")
+        console.log("the user data is fetched ")
     }
 
 }
@@ -37,7 +37,7 @@ export default function Servicelayout({children}){
   <div>
     {/* <MainNavbar /> */}
     <main className="">
-        <Toaster/>
+        <Toaster/> //important step
       {children}
     </main>
     
