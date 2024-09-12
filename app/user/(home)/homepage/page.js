@@ -261,7 +261,8 @@ export default function Homepage() {
             <option value="nodejs">JavaScript</option>
             <option value="python">Python</option>
 
-            <option value="cpp">Cpp (coming soon...)</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
             {/* <option value="Java">Java (coming soon...)</option> */}
           </select>
         </div>
