@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { SiCyberdefenders } from "react-icons/si";
 
 export default function LandingNavbar() {
   return (
@@ -8,7 +9,7 @@ export default function LandingNavbar() {
       <div className="navbar bg-black p-5 fixed top-0 w-full z-10">
         <div className="flex-1">
           <Link href="/" className="btn  text-xl font-sans">
-            CodeTogether
+            <SiCyberdefenders /> CodeTogether
           </Link>
         </div>
         <div className="flex-none">

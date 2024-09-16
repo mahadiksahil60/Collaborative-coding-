@@ -322,7 +322,6 @@ export async function POST(req) {
 
     if (selectedLanguage === "python") {
       try {
-        console.log(codeFilePath);
         const result = await runPythonCode(code, input);
         console.log("the result si", result);
         return NextResponse.json(result);

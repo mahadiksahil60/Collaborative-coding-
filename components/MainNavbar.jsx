@@ -1,20 +1,20 @@
 "use client";
-import React from "react";
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { UserContextProvider } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { SiCyberdefenders } from "react-icons/si";
+
 export default function MainNavbar() {
   const router = useRouter();
   const user = useContext(UserContextProvider);
   const [userData, setUserData] = useState(user);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchContext = async () => {
       if (user && user.data) {
-        const userId = user.data.uid;
-        console.log("User ID:", user);
         setUserData(user);
         setLoading(false);
       }
@@ -26,7 +26,6 @@ export default function MainNavbar() {
   const handleLogout = async () => {
     try {
       const userId = user.data.uid;
-      console.log("User ID:", userId);
       const logout = await fetch(`/api/user/auth/logout`, {
         method: "GET",
         headers: {
@@ -34,33 +33,38 @@ export default function MainNavbar() {
         },
       });
 
-      console.log("req to logout is made");
-
       const response = await logout.json();
-
       router.replace("/user/auth/login");
 
       if (response.status == 200) {
         toast.success("Logout successfully");
       }
     } catch (error) {
-      console.error("Not able to log out", error);
-      toast.error("Server is not responding unable to logout");
+      toast.error("Server is not responding, unable to logout");
     }
   };
 
   if (loading) {
     return <div>Loading...</div>;
   }
+
   return (
     <>
-      <div className="navbar bg-black p-5  top-0 w-full ">
-        <div className="flex-1">
-          <Link href="/user/homepage" className="btn  text-xl font-serif">
-            Welcome {user.data.username}{" "}
+      <div className="navbar bg-black p-5 top-0 w-full flex justify-between items-center">
+        <div className="flex-1 flex items-center">
+          <Link
+            href="/user/homepage"
+            className="btn text-xl font-sans flex items-center"
+          >
+            <SiCyberdefenders /> {user.data.username}
           </Link>
         </div>
-        <div className="flex-none">
+        <div className="bg-slate-800 flex-1 text-center border-double border-2 border-white p-2 rounded-xl">
+          <p className="text-white text-lg font-semibold">
+            The best ideas come to life through collaboration. Let’s code!
+          </p>
+        </div>
+        <div className="flex-1 flex justify-end">
           <ul className="menu menu-horizontal px-1 text-lg font-bold">
             <button
               onClick={handleLogout}

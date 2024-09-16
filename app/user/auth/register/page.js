@@ -46,7 +46,9 @@ export default function Register() {
       } else if (result.status == 400) {
         toast.error("email already in use.. try with different email");
       } else {
-        toast.error("Some error occured.. contact admin");
+        toast.error(
+          "Registration failed try with different set of credentials"
+        );
       }
     } catch (error) {
       toast.error(error);
@@ -68,7 +70,7 @@ export default function Register() {
                   <h2 className="mt-2 text-center text-3xl font-extrabold text-white">
                     Register with CodeTogether !
                   </h2>
-                  <p className="text-center text-neutral-700">It's free</p>
+                  <p className="text-center text-neutral-200">It's free</p>
                 </div>
                 <form className="mt-8 space-y-6">
                   <div className="rounded-md shadow-sm -space-y-px">
