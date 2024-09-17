@@ -35,7 +35,7 @@ export default function Homepage() {
   const [roomerror, setRoomError] = useState("");
 
   useEffect(() => {
-    const socket = io("http://localhost:3001");
+    const socket = io("https://wss-codetogether.configcloud.net/");
     setSocket(socket);
     socket.on("roomCreated", (data) => {
       console.log(`Room created: ${data.roomName}`);
@@ -281,7 +281,7 @@ export default function Homepage() {
             language={
               selectedLanguage === "nodejs" ? "javascript" : selectedLanguage
             }
-            defaultValue={``}
+            defaultValue={`//Use MainClass as class name in case of java. .. delete this placeholder`}
           />
         </div>
 

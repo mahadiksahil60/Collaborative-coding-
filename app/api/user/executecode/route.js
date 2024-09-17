@@ -307,7 +307,6 @@ export async function POST(req) {
 
     if (selectedLanguage === "java") {
       try {
-        console.log(codeFilePath);
         const result = await runJavaProgram(code, input);
         console.log("the result is", result);
         return NextResponse.json(result);

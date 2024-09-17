@@ -3,7 +3,6 @@
 import React from "react";
 import LandingNavbar from "@/components/LandingNavbar";
 import { useState } from "react";
-import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -41,75 +40,70 @@ export default function Login() {
         toast.error("Invalid Credentials");
       }
     } catch (error) {
-      console.log("The error occured is : ", error);
+      console.log("The error occurred: ", error);
     }
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mt-5">
+    <div className="flex flex-col min-h-screen">
       <LandingNavbar />
-      <div className="m-40 w-1/2 ">
+      <div className="flex-1 flex justify-center items-center px-4 py-8 md:px-8 md:py-12 mt-16">
         {" "}
-        {/* Adjust the top margin value as needed */}
-        <div className="mockup-window bg-base-300 border">
-          <div className="bg-base-200 flex justify-center px-4 py-16">
-            <div className="flex items-center justify-center mt-10 px-4 py-12 sm:px-6 lg:px-8">
-              <div className="max-w-md w-full space-y-8">
-                <div className="">
-                  <h2 className="mt-2 text-center text-3xl font-extrabold text-white">
-                    Log Into your Account
-                  </h2>
+        {/* Adjusted margin-top to account for navbar height */}
+        <div className="w-full max-w-md">
+          <p className="text-center text-lg p-2">
+            Use a desktop for a better experience
+          </p>
+
+          <div className="bg-base-300 border rounded-lg shadow-lg p-4 md:p-8">
+            <h2 className="text-center text-2xl md:text-3xl font-extrabold text-white mb-6">
+              Log Into Your Account
+            </h2>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="email" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    className="appearance-none rounded-md w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-white bg-base-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Email address"
+                    onChange={handleInputChange}
+                  />
                 </div>
-                <form className="mt-8 space-y-6">
-                  <div className="rounded-md shadow-sm -space-y-px">
-                    <div>
-                      <label htmlFor="email" className="sr-only">
-                        Email address
-                      </label>
-                      <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        className="appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Email address"
-                        onChange={handleInputChange}
-                      />
-                    </div>
 
-                    <div>
-                      <label htmlFor="password" className="sr-only">
-                        Password
-                      </label>
-                      <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        required
-                        className="appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-white rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Password"
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <button
-                      type="submit"
-                      className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={handleSubmit}
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                </form>
+                <div>
+                  <label htmlFor="password" className="sr-only">
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    className="appearance-none rounded-md w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-white bg-base-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Password"
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-            </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className="w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Log In
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }
