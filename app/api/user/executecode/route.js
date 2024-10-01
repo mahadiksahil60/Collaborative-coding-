@@ -10,6 +10,7 @@ const TEMP_DIR = path.join(process.cwd(), "temp");
 if (!fs.existsSync(TEMP_DIR)) {
   fs.mkdirSync(TEMP_DIR);
 }
+
 //function to make a unique directory
 const createTempDirectory = async () => {
   const uniquedir = path.join(TEMP_DIR, uuidv4());
@@ -210,6 +211,7 @@ const compileAndRunCPlusPlus = async (code, input) => {
   }
 };
 
+//fucntion to run js code
 const runJavascript = async (code, input) => {
   const tempdir = await createTempDirectory();
   const jsfilename = "myjavascript.js";
